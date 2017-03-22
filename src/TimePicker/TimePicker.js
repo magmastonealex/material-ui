@@ -85,6 +85,11 @@ class TimePicker extends Component {
      * Sets the time for the Time Picker programmatically.
      */
     value: PropTypes.object,
+
+    /**
+     * Allows setting a custom formatter
+     */
+    formatter: PropTypes.func
   };
 
   static defaultProps = {
@@ -190,6 +195,7 @@ class TimePicker extends Component {
       pedantic,
       style,
       textFieldStyle,
+      formatter
       ...other
     } = this.props;
 
@@ -202,7 +208,7 @@ class TimePicker extends Component {
           {...other}
           style={textFieldStyle}
           ref="input"
-          value={time === emptyTime ? null : formatTime(time, format, pedantic)}
+          value={time === emptyTime ? null : (formatter ? formatter(time) : formatTime(time, format, pedantic))}
           onFocus={this.handleFocusInput}
           onTouchTap={this.handleTouchTapInput}
         />
